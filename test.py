@@ -174,3 +174,139 @@ for pokemon in POKEMONS:
         print(f"✅ Créé Pokémon : {pokemon['nom']}, Type: {pokemon['type']}, Rarity: {pokemon['rarity']}")
     else:
         print(f"❌ Erreur lors de la création de {pokemon['nom']}: {response.status_code} - {response.text}")
+
+response = requests.post("http://localhost:8080/dresseurs", json={"nom":"Clément", "prenom":"Besnard"}, headers=HEADERS)
+if response.status_code == 201:
+    print(f"✅ Créé Dresseur : Clément Besnard")
+else:
+    print(f"❌ Erreur lors de la création de Clément Besnard: {response.status_code} - {response.text}")
+response = requests.post("http://localhost:8080/dresseurs", json={"nom":"Mathieu", "prenom":"Crespin"}, headers=HEADERS)
+if response.status_code == 201:
+    print(f"✅ Créé Dresseur : Mathieu Crespin")
+else:
+    print(f"❌ Erreur lors de la création de Mathieu Crespin : {response.status_code} - {response.text}")
+response = requests.post("http://localhost:8080/dresseurs", json={"nom":"Gaël", "prenom":"Djebar"}, headers=HEADERS)
+if response.status_code == 201:
+    print(f"✅ Créé Dresseur : Gaël Djebar")
+else:
+    print(f"❌ Erreur lors de la création de Gaël Djebar: {response.status_code} - {response.text}")
+
+response = requests.get("http://localhost:8080/dresseurs", headers=HEADERS)
+if response.status_code == 200:
+    dresseur1 = response.json()[0]["uuid"]
+    dresseur2 = response.json()[1]["uuid"]
+    dresseur3 = response.json()[2]["uuid"]
+    print(f"✅ Clément Besnard a pour uuid {dresseur1}, Mathieu Crespin a pour uuid {dresseur2} et Gaël Djebar a pour uuid {dresseur3}")
+else:
+    print(f"❌ Erreur lors de l'obtention des dresseurs : {response.status_code} - {response.text}")
+
+response = requests.post(f"http://localhost:8080/dresseurs/{dresseur1}/ouvrir-paquet", headers=HEADERS)
+if response.status_code == 201:
+    print(f"✅ Ouverture du paquet pour Clément Besnard")
+else:
+    print(f"❌ Erreur lors de l'ouverture du paquet pour Clément Besnard : {response.status_code} - {response.text}")
+
+response = requests.post(f"http://localhost:8080/dresseurs/{dresseur2}/ouvrir-paquet", headers=HEADERS)
+if response.status_code == 201:
+    print(f"✅ Ouverture du paquet pour Mathieu Crespin")
+else:
+    print(f"❌ Erreur lors de l'ouverture du paquet pour Mathieu Crespin : {response.status_code} - {response.text}")
+
+response = requests.post(f"http://localhost:8080/dresseurs/{dresseur3}/ouvrir-paquet", headers=HEADERS)
+if response.status_code == 201:
+    print(f"✅ Ouverture du paquet pour Gaël Djebar")
+else:
+    print(f"❌ Erreur lors de l'ouverture du paquet pour Gaël Djebar : {response.status_code} - {response.text}")
+
+response = requests.get("http://localhost:8080/dresseurs", headers=HEADERS)
+if response.status_code == 200:
+    pokemon1 = response.json()[0]["sideDeck"][0]["uuid"]
+    print(pokemon1)
+    pokemon2 = response.json()[1]["sideDeck"][0]["uuid"]
+    print(pokemon2)
+    pokemon3 = response.json()[2]["sideDeck"][0]["uuid"]
+    print(pokemon3)
+    print(f"✅ Clément possède un {response.json()[0]['sideDeck'][0]['nom']}, Mathieu possède un {response.json()[1]['sideDeck'][0]['nom']} et Gaël possède un {response.json()[2]['sideDeck'][0]['nom']}")
+else:
+    print(f"❌ Erreur lors de l'obtention des dresseurs : {response.status_code} - {response.text}")
+
+response = requests.post("http://localhost:8080/dresseurs/echanger", json={"dresseur1Uuid": dresseur1, 
+                                                                           "dresseur2Uuid": dresseur2,
+                                                                           "pokemon1Uuid": pokemon1,
+                                                                           "pokemon2Uuid": pokemon2
+                                                                           }, headers=HEADERS)
+if response.status_code == 200:
+    print(f"✅ Echange effectué")
+else:
+    print(f"❌ Erreur lors de l'échange : {response.status_code} - {response.text}")
+
+response = requests.get("http://localhost:8080/dresseurs", headers=HEADERS)
+if response.status_code == 200:
+    pokemon1 = response.json()[0]["sideDeck"][0]["uuid"]
+    pokemon2 = response.json()[1]["sideDeck"][0]["uuid"]
+    pokemon3 = response.json()[2]["sideDeck"][0]["uuid"]
+    print(f"✅ Clément possède un {response.json()[0]['sideDeck'][0]['nom']}, Mathieu possède un {response.json()[1]['sideDeck'][0]['nom']} et Gaël possède un {response.json()[2]['sideDeck'][0]['nom']}")
+else:
+    print(f"❌ Erreur lors de l'obtention des dresseurs : {response.status_code} - {response.text}")
+
+response = requests.post("http://localhost:8080/dresseurs/echanger", json={"dresseur1Uuid": dresseur1, 
+                                                                           "dresseur2Uuid": dresseur2,
+                                                                           "pokemon1Uuid": pokemon1,
+                                                                           "pokemon2Uuid": pokemon2
+                                                                           }, headers=HEADERS)
+if response.status_code == 200:
+    print(f"❌ Echange effectué")
+else:
+    print(f"✅ Erreur lors de l'échange : {response.status_code} - {response.text}")
+
+response = requests.get("http://localhost:8080/dresseurs", headers=HEADERS)
+if response.status_code == 200:
+    pokemon1 = response.json()[0]["sideDeck"][0]["uuid"]
+    pokemon2 = response.json()[1]["sideDeck"][0]["uuid"]
+    pokemon3 = response.json()[2]["sideDeck"][0]["uuid"]
+    print(f"✅ Clément possède un {response.json()[0]['sideDeck'][0]['nom']}, Mathieu possède un {response.json()[1]['sideDeck'][0]['nom']} et Gaël possède un {response.json()[2]['sideDeck'][0]['nom']}")
+else:
+    print(f"❌ Erreur lors de l'obtention des dresseurs : {response.status_code} - {response.text}")
+
+
+response = requests.get("http://localhost:8080/dresseurs/historique", json={}, headers=HEADERS)
+if response.status_code == 200:
+    print(f"✅ Historique récupéré.")
+else:
+    print(f"❌ Historique non récupéré: {response.status_code} - {response.text}")
+
+response = requests.post("http://localhost:8080/dresseurs/echanger", json={"dresseur1Uuid": dresseur2, 
+                                                                           "dresseur2Uuid": dresseur3,
+                                                                           "pokemon1Uuid": pokemon2,
+                                                                           "pokemon2Uuid": pokemon3
+                                                                           }, headers=HEADERS)
+if response.status_code == 200:
+    print(f"✅ Echange effectué")
+else:
+    print(f"❌ Erreur lors de l'échange : {response.status_code} - {response.text}")
+
+response = requests.get("http://localhost:8080/dresseurs/historique", json={}, headers=HEADERS)
+if response.status_code == 200:
+    print(f"✅ Historique récupéré.")
+else:
+    print(f"❌ Historique non récupéré: {response.status_code} - {response.text}")
+
+response = requests.post("http://localhost:8080/dresseurs/echanger", json={"dresseur1Uuid": dresseur3, 
+                                                                           "dresseur2Uuid": dresseur1,
+                                                                           "pokemon1Uuid": pokemon3,
+                                                                           "pokemon2Uuid": pokemon1
+                                                                           }, headers=HEADERS)
+if response.status_code == 200:
+    print(f"✅ Echange effectué")
+else:
+    print(f"❌ Erreur lors de l'échange : {response.status_code} - {response.text}")
+
+response = requests.post("http://localhost:8080/dresseurs/echanger", json={"dresseur1Uuid": dresseur3, 
+                                                                           "dresseur2Uuid": dresseur1,
+                                                                           "pokemon1Uuid": pokemon3,
+                                                                           "pokemon2Uuid": pokemon1
+                                                                           }, headers=HEADERS)
+if response.status_code == 200:
+    print(f"❌ Echange effectué")
+else:
+    print(f"✅ Erreur lors de l'échange : {response.status_code} - {response.text}")
