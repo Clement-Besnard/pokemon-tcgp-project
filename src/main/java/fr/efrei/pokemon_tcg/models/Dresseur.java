@@ -18,6 +18,8 @@ public class Dresseur {
 
 	private LocalDateTime deletedAt;
 
+	private LocalDateTime lastPackOpenedAt;
+
 	@OneToMany
 	private List<Pokemon> mainDeck;
 
@@ -54,6 +56,14 @@ public class Dresseur {
 
 	public void setDeletedAt(LocalDateTime deletedAt) {
 		this.deletedAt = deletedAt;
+	}
+
+	public LocalDateTime getLastPackOpenedAt() {
+		return lastPackOpenedAt;
+	}
+
+	public void setLastPackOpenedAt(LocalDateTime lastPackOpenedAt) {
+		this.lastPackOpenedAt = lastPackOpenedAt;
 	}
 
 	public List<Pokemon> getMainDeck() {

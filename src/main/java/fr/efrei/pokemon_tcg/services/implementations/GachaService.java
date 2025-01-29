@@ -1,5 +1,6 @@
 package fr.efrei.pokemon_tcg.services.implementations;
 
+import fr.efrei.pokemon_tcg.constants.PokemonTemplates;
 import fr.efrei.pokemon_tcg.constants.TypePokemon;
 import fr.efrei.pokemon_tcg.models.Dresseur;
 import fr.efrei.pokemon_tcg.models.Pokemon;
@@ -7,6 +8,7 @@ import fr.efrei.pokemon_tcg.repositories.DresseurRepository;
 import fr.efrei.pokemon_tcg.repositories.PokemonRepository;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
@@ -22,32 +24,25 @@ public class GachaService {
         this.dresseurRepository = dresseurRepository;
     }
 
-    private static class PokemonTemplate {
+    public static class PokemonTemplate {
         String nom;
         int rarity;
         TypePokemon type;
 
-        PokemonTemplate(String nom, int rarity, TypePokemon type) {
+        public PokemonTemplate(String nom, int rarity, TypePokemon type) {
             this.nom = nom;
             this.rarity = rarity;
             this.type = type;
         }
     }
 
-    private static final List<PokemonTemplate> POKEMON_TEMPLATES = new ArrayList<>();
-
-    static {
-        POKEMON_TEMPLATES.add(new PokemonTemplate("Pikachu", 1, TypePokemon.ELECTRIQUE));
-        POKEMON_TEMPLATES.add(new PokemonTemplate("Bulbizarre", 1, TypePokemon.PLANTE));
-        POKEMON_TEMPLATES.add(new PokemonTemplate("Salamèche", 2, TypePokemon.FEU));
-        POKEMON_TEMPLATES.add(new PokemonTemplate("Carapuce", 2, TypePokemon.EAU));
-        POKEMON_TEMPLATES.add(new PokemonTemplate("Evoli", 3, TypePokemon.NORMAL));
-        POKEMON_TEMPLATES.add(new PokemonTemplate("Dracaufeu", 4, TypePokemon.FEU));
-        POKEMON_TEMPLATES.add(new PokemonTemplate("Mewtwo", 5, TypePokemon.PSY));
-    }
-
     public void ouvrirPaquet(String dresseurUuid) {
         Dresseur dresseur = dresseurRepository.findById(dresseurUuid).orElseThrow(() -> new IllegalArgumentException("Dresseur non trouvé"));
+
+        LocalDateTime now = LocalDateTime.now();
+        if (dresseur.getLastPackOpenedAt() != null && dresseur.getLastPackOpenedAt().toLocalDate().isEqual(now.toLocalDate())) {
+            throw new IllegalArgumentException("Vous avez déjà ouvert un paquet aujourd'hui.");
+        }
 
         for (int i = 0; i < 5; i++) {
             PokemonTemplate template = genererPokemonTemplate();
@@ -60,6 +55,7 @@ public class GachaService {
             dresseur.getSideDeck().add(pokemon);
         }
 
+        dresseur.setLastPackOpenedAt(now);
         dresseurRepository.save(dresseur);
     }
 
@@ -67,7 +63,7 @@ public class GachaService {
         Random random = new Random();
         int rarity = genererRarity();
         List<PokemonTemplate> filteredTemplates = new ArrayList<>();
-        for (PokemonTemplate template : POKEMON_TEMPLATES) {
+        for (PokemonTemplate template : PokemonTemplates.POKEMON_TEMPLATES) {
             if (template.rarity == rarity) {
                 filteredTemplates.add(template);
             }
