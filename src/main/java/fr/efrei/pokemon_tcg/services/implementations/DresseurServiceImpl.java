@@ -35,7 +35,7 @@ public class DresseurServiceImpl implements IDresseurService {
 	public void capturerPokemon(String uuid, CapturePokemon capturePokemon) {
 		Dresseur dresseur = findById(uuid);
 		Pokemon pokemon = pokemonService.findById(capturePokemon.getUuid());
-		dresseur.getPokemonList().add(pokemon);
+		dresseur.getSideDeck().add(pokemon);
 		repository.save(dresseur);
 	}
 

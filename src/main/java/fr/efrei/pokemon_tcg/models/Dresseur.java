@@ -19,7 +19,10 @@ public class Dresseur {
 	private LocalDateTime deletedAt;
 
 	@OneToMany
-	List<Pokemon> pokemonList;
+	private List<Pokemon> mainDeck;
+
+	@OneToMany
+	private List<Pokemon> sideDeck;
 
 	public String getUuid() {
 		return uuid;
@@ -53,11 +56,19 @@ public class Dresseur {
 		this.deletedAt = deletedAt;
 	}
 
-	public List<Pokemon> getPokemonList() {
-		return pokemonList;
+	public List<Pokemon> getMainDeck() {
+		return mainDeck;
 	}
 
-	public void setPokemonList(List<Pokemon> pokemonList) {
-		this.pokemonList = pokemonList;
+	public void setMainDeck(List<Pokemon> mainDeck) {
+		this.mainDeck = mainDeck;
+	}
+
+	public List<Pokemon> getSideDeck() {
+		return sideDeck;
+	}
+
+	public void setSideDeck(List<Pokemon> sideDeck) {
+		this.sideDeck = sideDeck;
 	}
 }

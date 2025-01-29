@@ -12,7 +12,7 @@ public class Pokemon {
 
 	private String nom;
 
-	private Integer niveau;
+	private Integer rarity;
 
 	@Enumerated(EnumType.STRING)
 	private TypePokemon type;
@@ -25,12 +25,12 @@ public class Pokemon {
 		this.nom = nom;
 	}
 
-	public Integer getNiveau() {
-		return niveau;
+	public Integer getRarity() {
+		return rarity;
 	}
 
-	public void setNiveau(Integer niveau) {
-		this.niveau = niveau;
+	public void setRarity(Integer rarity) {
+		this.rarity = rarity;
 	}
 
 	public TypePokemon getType() {
