@@ -17,8 +17,6 @@ public class Pokemon {
     @Enumerated(EnumType.STRING)
     private TypePokemon type;
 
-    private int count = 1; // Ajoutez cet attribut
-
     public String getNom() {
         return nom;
     }
@@ -45,13 +43,5 @@ public class Pokemon {
 
     public String getUuid() {
         return uuid;
-    }
-
-    public int getCount() {
-        return count;
-    }
-
-    public void setCount(int count) {
-        this.count = count;
     }
 }

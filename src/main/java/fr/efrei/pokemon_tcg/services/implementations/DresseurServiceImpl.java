@@ -32,26 +32,10 @@ public class DresseurServiceImpl implements IDresseurService {
 		return repository.findById(uuid).orElse(null);
 	}
 
-	@Override
 	public void capturerPokemon(String uuid, CapturePokemon capturePokemon) {
 		Dresseur dresseur = findById(uuid);
 		Pokemon pokemon = pokemonService.findById(capturePokemon.getUuid());
-
-		// Vérifiez si le Pokémon existe déjà dans le sideDeck
-		boolean pokemonExists = false;
-		for (Pokemon p : dresseur.getSideDeck()) {
-			if (p.getUuid().equals(pokemon.getUuid())) {
-				p.setCount(p.getCount() + 1);
-				pokemonExists = true;
-				break;
-			}
-		}
-
-		// Si le Pokémon n'existe pas, ajoutez-le au sideDeck
-		if (!pokemonExists) {
-			dresseur.getSideDeck().add(pokemon);
-		}
-
+		dresseur.getSideDeck().add(pokemon);
 		repository.save(dresseur);
 	}
 
