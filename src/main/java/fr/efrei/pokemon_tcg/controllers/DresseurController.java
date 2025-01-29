@@ -30,6 +30,9 @@ public class DresseurController {
 
     @PostMapping
     public ResponseEntity<?> create(@RequestBody DresseurDTO dresseurDTO) {
+        if (dresseurDTO.getPrenom() == null || dresseurDTO.getNom() == null) {
+            return new ResponseEntity<>("Tous les champs sont obligatoires.", HttpStatus.BAD_REQUEST);
+        }
         dresseurService.create(dresseurDTO);
         return new ResponseEntity<>(HttpStatus.CREATED);
     }

@@ -16,6 +16,12 @@ public class CreatePokemon {
 
     private TypePokemon type;
 
+    @Length(min = 3, max = 50)
+    private String attack1;
+
+    @Length(min = 3, max = 50)
+    private String attack2;
+
     public String getNom() {
         return nom;
     }
@@ -26,5 +32,13 @@ public class CreatePokemon {
 
     public TypePokemon getType() {
         return type;
+    }
+
+    public String getAttack1() {
+        return attack1;
+    }
+
+    public String getAttack2() {
+        return attack2;
     }
 }

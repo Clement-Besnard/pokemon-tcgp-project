@@ -17,6 +17,10 @@ public class Pokemon {
     @Enumerated(EnumType.STRING)
     private TypePokemon type;
 
+    private String attack1;
+
+    private String attack2;
+
     public String getNom() {
         return nom;
     }
@@ -39,6 +43,22 @@ public class Pokemon {
 
     public void setType(TypePokemon type) {
         this.type = type;
+    }
+
+    public String getAttack1() {
+        return attack1;
+    }
+
+    public void setAttack1(String attack1) {
+        this.attack1 = attack1;
+    }
+
+    public String getAttack2() {
+        return attack2;
+    }
+
+    public void setAttack2(String attack2) {
+        this.attack2 = attack2;
     }
 
     public String getUuid() {
