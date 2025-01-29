@@ -1,6 +1,5 @@
 package fr.efrei.pokemon_tcg.controllers;
 
-import fr.efrei.pokemon_tcg.dto.CapturePokemon;
 import fr.efrei.pokemon_tcg.dto.DresseurDTO;
 import fr.efrei.pokemon_tcg.models.Dresseur;
 import fr.efrei.pokemon_tcg.services.IDresseurService;
@@ -38,20 +37,6 @@ public class DresseurController {
     @DeleteMapping("/{uuid}")
     public ResponseEntity<?> delete(@PathVariable String uuid) {
         dresseurService.delete(uuid);
-        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
-    }
-
-    @PatchMapping("/{uuid}/capturer")
-    public ResponseEntity<?> capturer(
-            @PathVariable String uuid,
-            @RequestBody CapturePokemon capturePokemon
-    ) {
-        dresseurService.capturerPokemon(uuid, capturePokemon);
-        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
-    }
-
-    @PatchMapping("/{uuid}/acheter")
-    public ResponseEntity<?> acheter() {
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
