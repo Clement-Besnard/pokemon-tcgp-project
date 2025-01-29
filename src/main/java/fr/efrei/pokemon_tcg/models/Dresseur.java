@@ -61,6 +61,9 @@ public class Dresseur {
 	}
 
 	public void setMainDeck(List<Pokemon> mainDeck) {
+		if (mainDeck.size() > 5) {
+			throw new IllegalArgumentException("Le mainDeck ne peut pas contenir plus de 5 éléments.");
+		}
 		this.mainDeck = mainDeck;
 	}
 

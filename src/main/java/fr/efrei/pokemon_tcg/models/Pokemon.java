@@ -6,42 +6,52 @@ import jakarta.persistence.*;
 @Entity
 public class Pokemon {
 
-	@Id
-	@GeneratedValue(strategy = GenerationType.UUID)
-	private String uuid;
+    @Id
+    @GeneratedValue(strategy = GenerationType.UUID)
+    private String uuid;
 
-	private String nom;
+    private String nom;
 
-	private Integer rarity;
+    private Integer rarity;
 
-	@Enumerated(EnumType.STRING)
-	private TypePokemon type;
+    @Enumerated(EnumType.STRING)
+    private TypePokemon type;
 
-	public String getNom() {
-		return nom;
-	}
+    private int count = 1; // Ajoutez cet attribut
 
-	public void setNom(String nom) {
-		this.nom = nom;
-	}
+    public String getNom() {
+        return nom;
+    }
 
-	public Integer getRarity() {
-		return rarity;
-	}
+    public void setNom(String nom) {
+        this.nom = nom;
+    }
 
-	public void setRarity(Integer rarity) {
-		this.rarity = rarity;
-	}
+    public Integer getRarity() {
+        return rarity;
+    }
 
-	public TypePokemon getType() {
-		return type;
-	}
+    public void setRarity(Integer rarity) {
+        this.rarity = rarity;
+    }
 
-	public void setType(TypePokemon type) {
-		this.type = type;
-	}
+    public TypePokemon getType() {
+        return type;
+    }
 
-	public String getUuid() {
-		return uuid;
-	}
+    public void setType(TypePokemon type) {
+        this.type = type;
+    }
+
+    public String getUuid() {
+        return uuid;
+    }
+
+    public int getCount() {
+        return count;
+    }
+
+    public void setCount(int count) {
+        this.count = count;
+    }
 }
