@@ -161,7 +161,7 @@ POKEMONS = [
 
 # Clé d'authentification
 HEADERS = {
-    "x-api-key": "clementtoken",
+    "x-api-key": "ProjectToken",
     "Content-Type": "application/json"
 }
 
@@ -292,20 +292,6 @@ response = requests.post(f"http://localhost:8080/dresseurs/{dresseur1}/echanger-
 
 if response.status_code == 200:
     print(f"✅ Side deck changé pour Clément Besnard")
-else:
-    print(f"❌ : {response.status_code} - {response.text}")
-
-response = requests.post(f"http://localhost:8080/dresseurs/{dresseur2}/echanger-decks/{pokemon2}", headers=HEADERS)
-
-if response.status_code == 200:
-    print(f"✅ Side deck changé pour Mathieu Crespin")
-else:
-    print(f"❌ : {response.status_code} - {response.text}")
-
-response = requests.post(f"http://localhost:8080/dresseurs/{dresseur1}/defi/{dresseur2}", headers=HEADERS)
-
-if response.status_code == 200:
-    print(f"✅ Clément a défié Mathieu")
 else:
     print(f"❌ : {response.status_code} - {response.text}")
 

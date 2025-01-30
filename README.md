@@ -1,7 +1,11 @@
 
 # Pokémon TCG API
 
-## Routes
+**Projet réalisé par Hamid DIAW & Clément BESNARD**
+
+*Un fichier python de test est disponible pour tester l'api si besoin.*
+
+## Routes  
 
 ### Dresseurs
 
