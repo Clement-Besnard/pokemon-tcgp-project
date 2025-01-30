@@ -135,4 +135,38 @@ public class DresseurServiceImpl implements IDresseurService {
     public List<Echange> getHistoriqueEchangesDresseur(String dresseurUuid) {
         return echangeRepository.findAllByDresseur1UuidOrDresseur2Uuid(dresseurUuid, dresseurUuid);
     }
+
+    @Override
+    public boolean echangerDecks(String dresseurUuid, String pokemonUuid) {
+        Dresseur dresseur = findById(dresseurUuid);
+        if (dresseur == null) {
+            return false;
+        }
+
+        Pokemon pokemon = dresseur.getMainDeck().stream()
+                .filter(p -> p.getUuid().equals(pokemonUuid))
+                .findFirst()
+                .orElse(dresseur.getSideDeck().stream()
+                        .filter(p -> p.getUuid().equals(pokemonUuid))
+                        .findFirst()
+                        .orElse(null));
+
+        if (pokemon == null) {
+            return false;
+        }
+
+        if (dresseur.getMainDeck().contains(pokemon)) {
+            dresseur.getMainDeck().remove(pokemon);
+            dresseur.getSideDeck().add(pokemon);
+        } else {
+            if (dresseur.getMainDeck().size() >= 5) {
+                throw new IllegalArgumentException("Le mainDeck ne peut pas contenir plus de 5 éléments.");
+            }
+            dresseur.getSideDeck().remove(pokemon);
+            dresseur.getMainDeck().add(pokemon);
+        }
+
+        repository.save(dresseur);
+        return true;
+    }
 }

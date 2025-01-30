@@ -68,6 +68,15 @@ public class DresseurController {
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
+    @PostMapping("/{dresseurUuid}/echanger-decks/{pokemonUuid}")
+    public ResponseEntity<?> echangerDecks(@PathVariable String dresseurUuid, @PathVariable String pokemonUuid) {
+        boolean isEchange = dresseurService.echangerDecks(dresseurUuid, pokemonUuid);
+        if (!isEchange) {
+            return new ResponseEntity<>("Échange impossible.", HttpStatus.BAD_REQUEST);
+        }
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+
     @GetMapping("/historique")
     public ResponseEntity<List<Echange>> getHistoriqueEchanges(@RequestParam(required = false) Integer year, @RequestParam(required = false) Integer month, @RequestParam(required = false) Integer day) {
         LocalDateTime start;
