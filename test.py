@@ -287,3 +287,26 @@ if response.status_code == 200:
     print(f"✅ Historique récupéré.")
 else:
     print(f"❌ Historique non récupéré: {response.status_code} - {response.text}")
+
+response = requests.post(f"http://localhost:8080/dresseurs/{dresseur1}/echanger-decks/{pokemon1}", headers=HEADERS)
+
+if response.status_code == 200:
+    print(f"✅ Side deck changé pour Clément Besnard")
+else:
+    print(f"❌ : {response.status_code} - {response.text}")
+
+response = requests.post(f"http://localhost:8080/dresseurs/{dresseur2}/echanger-decks/{pokemon2}", headers=HEADERS)
+
+if response.status_code == 200:
+    print(f"✅ Side deck changé pour Mathieu Crespin")
+else:
+    print(f"❌ : {response.status_code} - {response.text}")
+
+response = requests.post(f"http://localhost:8080/dresseurs/{dresseur1}/defi/{dresseur2}", headers=HEADERS)
+
+if response.status_code == 200:
+    print(f"✅ Clément a défié Mathieu")
+else:
+    print(f"❌ : {response.status_code} - {response.text}")
+
+

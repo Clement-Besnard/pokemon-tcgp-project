@@ -105,4 +105,13 @@ public class DresseurController {
         List<Echange> echanges = dresseurService.getHistoriqueEchangesDresseur(uuid);
         return new ResponseEntity<>(echanges, HttpStatus.OK);
     }
+
+    @PostMapping("/{dresseur1Uuid}/defi/{dresseur2Uuid}")
+    public ResponseEntity<?> defi(@PathVariable String dresseur1Uuid, @PathVariable String dresseur2Uuid) {
+        boolean isDefi = dresseurService.defi(dresseur1Uuid, dresseur2Uuid);
+        if (!isDefi) {
+            return new ResponseEntity<>("Défi impossible.", HttpStatus.BAD_REQUEST);
+        }
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
 }

@@ -11,6 +11,8 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Random;
+import java.util.Comparator;
 
 @Service
 public class DresseurServiceImpl implements IDresseurService {
@@ -167,6 +169,46 @@ public class DresseurServiceImpl implements IDresseurService {
         }
 
         repository.save(dresseur);
+        return true;
+    }
+
+    @Override
+    public boolean defi(String dresseur1Uuid, String dresseur2Uuid) {
+        Dresseur dresseur1 = findById(dresseur1Uuid);
+        Dresseur dresseur2 = findById(dresseur2Uuid);
+        if (dresseur1 == null || dresseur2 == null) {
+            return false;
+        }
+
+        if (dresseur1.getMainDeck().isEmpty() || dresseur2.getMainDeck().isEmpty()) {
+            return false;
+        }
+
+        // Déterminer le vainqueur aléatoirement
+        Random random = new Random();
+        Dresseur vainqueur = random.nextBoolean() ? dresseur1 : dresseur2;
+        Dresseur perdant = vainqueur == dresseur1 ? dresseur2 : dresseur1;
+
+        // Trouver la meilleure carte du perdant
+        Pokemon meilleureCarte = perdant.getMainDeck().stream()
+                .max(Comparator.comparingInt(Pokemon::getRarity))
+                .orElse(null);
+
+        if (meilleureCarte == null) {
+            return false;
+        }
+
+        // Ajouter la meilleure carte du perdant au sideDeck du vainqueur s'il ne la possède pas déjà
+        if (!vainqueur.getSideDeck().contains(meilleureCarte)) {
+            vainqueur.getSideDeck().add(meilleureCarte);
+        }
+
+        // Retirer la meilleure carte du mainDeck du perdant
+        perdant.getMainDeck().remove(meilleureCarte);
+
+        repository.save(vainqueur);
+        repository.save(perdant);
+
         return true;
     }
 }

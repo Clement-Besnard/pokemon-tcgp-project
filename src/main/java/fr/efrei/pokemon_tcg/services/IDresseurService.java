@@ -21,4 +21,6 @@ public interface IDresseurService {
 
     List<Echange> getHistoriqueEchanges(LocalDateTime start, LocalDateTime end);
     List<Echange> getHistoriqueEchangesDresseur(String dresseurUuid);
+
+    boolean defi(String dresseur1Uuid, String dresseur2Uuid);
 }
